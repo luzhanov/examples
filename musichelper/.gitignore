@@ -1,0 +1,15 @@
+*.class
+target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#DB files
+myDB*.*
+test.db
+
+# IDEA files
+.idea/
+*.iml
