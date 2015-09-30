@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyLifeOrganized-xml ver="1.2">
+    <TaskTree>
+        <TaskNode Caption="проработать ресурс по природной фотографии http://www.naturescapes.net">
+            <Importance>105</Importance>
+            <Note>http://www.naturescapes.net
+            </Note>
+            <Created>2012-03-16T12:35:55</Created>
+        </TaskNode>
+        <TaskNode Caption="посмотреть фотографа Kevin McNeal http://www.flickr.com/photos/kevinmcneal/">
+            <Note>http://www.flickr.com/photos/kevinmcneal/
+            </Note>
+            <TheGoal>2</TheGoal>
+            <Created>2013-01-20T12:53:27</Created>
+        </TaskNode>
+        <TaskNode Caption="посмотреть результаты крупнейших фотоконкурсов 2010 http://ru-fotokonkurs.livejournal.com/172052....">
+            <Note>посмотреть результаты крупнейших фотоконкурсов 2010 http://ru-fotokonkurs.livejournal.com/172052.html
+            </Note>
+            <TheGoal>2</TheGoal>
+            <Created>2012-01-03T10:01:07</Created>
+        </TaskNode>
+        <TaskNode Caption="Michael Kenna">
+            <Note>http://www.michaelkenna.net/imagearchive.php
+            </Note>
+            <TheGoal>2</TheGoal>
+            <Created>2013-05-31T18:22:39</Created>
+        </TaskNode>
+        <TaskNode Caption="!! прочитать книгу по тайм-менеджменту Яна Франк - Дневник дизайнера-маньяка">
+            <Created>2011-01-19T22:43:39</Created>
+        </TaskNode>
+    </TaskTree>
+    <PConfig>
+        <i0>ProfileDate_Desktop=2012-12-04T16:16:16</i0>
+    </PConfig>
+</MyLifeOrganized-xml>
