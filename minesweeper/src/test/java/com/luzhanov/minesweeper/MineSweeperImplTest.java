@@ -12,6 +12,14 @@ public class MineSweeperImplTest {
                                         "..*.\n" +
                                         "....";
 
+    public static final String HINT1 = "*211\n" +
+                                       "12*1\n" +
+                                       "0111";
+
+    public static final String FIELD_ONE_LINE = "*.*...*.";
+
+    public static final String HINT_ONE_LINE = "*2*101*1";
+
     public static final String FIELD_INCORRECT_CHARS = "*...\n" +
                                                        "a.*.\n" +
                                                        "....";
@@ -21,9 +29,7 @@ public class MineSweeperImplTest {
                                                    "....";
 
 
-    public static final String HINT1 = "*211\n" +
-                                       "12*1\n" +
-                                       "0111";
+
 
     @Test
     public void parsesFieldWithCorrectSize() throws Exception {
@@ -59,11 +65,16 @@ public class MineSweeperImplTest {
         assertThat(mineSweeper.getHintField()).isEqualTo(HINT1);
     }
 
+    @Test
+    public void calculatesCorrectHintOneLine() throws Exception {
+        mineSweeper.setMineField(FIELD_ONE_LINE);
+        assertThat(mineSweeper.getHintField()).isEqualTo(HINT_ONE_LINE);
+    }
+
+
     @Test(expected = IllegalStateException.class)
     public void failsOnHintCalculationIfFieldIsNotSet() throws Exception {
         mineSweeper.getHintField();
     }
-
-    //todo: test single line
 
 }

@@ -13,8 +13,6 @@ public class MineSweeperImpl implements MineSweeper {
     private int[][] mineField = null;
 
     public void setMineField(String mineField) throws IllegalArgumentException {
-        //todo: validate for squareness
-
         this.mineField = parseMineFieldFromString(mineField);
     }
 
@@ -23,16 +21,73 @@ public class MineSweeperImpl implements MineSweeper {
             throw new IllegalStateException("Mine field is not set");
         }
 
-        //todo: implement
-        return null;
+        char[][] hintArray = new char[mineField.length][mineField[0].length];
+        int[][] hintCntArray = getCountsCalculation(mineField);
+
+        for (int i = 0; i < mineField.length; i++) {
+            for (int j = 0; j < mineField[i].length; j++) {
+                if (mineField[i][j] == 1) {
+                    hintArray[i][j] = CHAR_MINE;
+                } else {
+                    hintArray[i][j] = Integer.toString(hintCntArray[i+1][j+1]).charAt(0);
+                }
+            }
+        }
+
+        return generateHintStringFromHintArray(hintArray);
+    }
+
+    /**
+     * Returns extended array (+1 line from each side)
+     * @param mineField field with 1 as a mine
+     * @return extended array (+1 line from each side)
+     */
+    private int[][] getCountsCalculation(int[][] mineField) {
+        int[][] hintCntArray = new int[mineField.length + 2][mineField[0].length + 2];
+
+        for (int i = 1; i < mineField.length + 1; i++) {
+            for (int j = 1; j < mineField[i-1].length + 1; j++) {
+                if (mineField[i-1][j-1] == 1) {
+                    hintCntArray[i-1][j]++;
+                    hintCntArray[i][j-1]++;
+                    hintCntArray[i-1][j-1]++;
+                    hintCntArray[i+1][j]++;
+                    hintCntArray[i][j+1]++;
+                    hintCntArray[i+1][j+1]++;
+                    hintCntArray[i+1][j-1]++;
+                    hintCntArray[i-1][j+1]++;
+                }
+            }
+        }
+
+        return hintCntArray;
+    }
+
+    private String generateHintStringFromHintArray(char[][] hintArray ) {
+        StringBuilder out = new StringBuilder();
+        for (char[] chars : hintArray) {
+            if (out.length() != 0) {
+                out.append(LINE_SEPARATOR);
+            }
+            out.append(chars);
+        }
+        return out.toString();
     }
 
     public int getWidth() {
-        return -1;
+        if (mineField != null && mineField.length > 0) {
+            return mineField[0].length;
+        }
+
+        return 0;
     }
 
     public int getHeight() {
-        return -1;
+        if (mineField != null) {
+            return mineField.length;
+        }
+
+        return 0;
     }
 
     private int[][] parseMineFieldFromString(String mineField) {
@@ -47,10 +102,35 @@ public class MineSweeperImpl implements MineSweeper {
             throw new IllegalArgumentException("Mine field lines have different length! Should be the same length");
         }
 
+        int length = rows[0].length();
+        int height = rows.length;
 
+        int[][] result = new int[height][length];
 
-        //todo: implement
-        return null;
+        for (int i = 0; i < rows.length; i++) {
+            result[i] = parseFieldLine(rows[i]);
+        }
+
+        return result;
+    }
+
+    private int[] parseFieldLine(String fieldLine) {
+        char[] chars = fieldLine.toCharArray();
+        int[] result = new int[chars.length];
+
+        for (int i=0; i < chars.length; i++) {
+            char c = chars[i];
+
+            if (CHAR_MINE.equals(c)) {
+                result[i] = 1;
+            } else if (CHAR_EMPTY.equals(c)) {
+                result[i] = 0;
+            } else {
+                throw new IllegalArgumentException("Unexpected char: " + c);
+            }
+        }
+
+        return result;
     }
 
     private boolean isRowsTheSameLength(String[] rows) {
