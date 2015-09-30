@@ -1,0 +1,12 @@
+Please submit a zip file containing a maven project.
+                
+Non-functional requirements:
+ 
+* Performance in terms of Memory/CPU will be evaluated
+* Design, Simplicity, Code readability and style will be evaluated
+* Follow standard Java code conventions: http://www.oracle.com/technetwork/java/codeconventions-150003.pdf
+* Unit test should be included (JUnit) – test coverage will be evaluated
+ 
+Functional requirements: 
+
+* Implement the interface MineSweeper
