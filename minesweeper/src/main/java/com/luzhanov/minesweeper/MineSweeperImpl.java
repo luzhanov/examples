@@ -21,20 +21,20 @@ public class MineSweeperImpl implements MineSweeper {
             throw new IllegalStateException("Mine field is not set");
         }
 
-        char[][] hintArray = new char[mineField.length][mineField[0].length];
-        int[][] hintCntArray = getCountsCalculation(mineField);
+        char[][] hintCharArray = new char[mineField.length][mineField[0].length];
+        int[][] hintCountBorderedArray = getHintCountCalculationWithBorder(mineField);
 
         for (int i = 0; i < mineField.length; i++) {
             for (int j = 0; j < mineField[i].length; j++) {
                 if (mineField[i][j] == 1) {
-                    hintArray[i][j] = CHAR_MINE;
+                    hintCharArray[i][j] = CHAR_MINE;
                 } else {
-                    hintArray[i][j] = Integer.toString(hintCntArray[i+1][j+1]).charAt(0);
+                    hintCharArray[i][j] = Integer.toString(hintCountBorderedArray[i+1][j+1]).charAt(0);
                 }
             }
         }
 
-        return generateHintStringFromHintArray(hintArray);
+        return generateHintStringFromHintCharArray(hintCharArray);
     }
 
     /**
@@ -42,7 +42,7 @@ public class MineSweeperImpl implements MineSweeper {
      * @param mineField field with 1 as a mine
      * @return extended array (+1 line from each side)
      */
-    private int[][] getCountsCalculation(int[][] mineField) {
+    private int[][] getHintCountCalculationWithBorder(int[][] mineField) {
         int[][] hintCntArray = new int[mineField.length + 2][mineField[0].length + 2];
 
         for (int i = 1; i < mineField.length + 1; i++) {
@@ -63,7 +63,7 @@ public class MineSweeperImpl implements MineSweeper {
         return hintCntArray;
     }
 
-    private String generateHintStringFromHintArray(char[][] hintArray ) {
+    private String generateHintStringFromHintCharArray(char[][] hintArray) {
         StringBuilder out = new StringBuilder();
         for (char[] chars : hintArray) {
             if (out.length() != 0) {
@@ -140,7 +140,6 @@ public class MineSweeperImpl implements MineSweeper {
                 return false;
             }
         }
-
         return true;
     }
 
