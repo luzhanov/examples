@@ -24,13 +24,11 @@ public class ProductPriceMergeService {
 
     @SuppressWarnings("UnusedAssignment")
     public void mergeSortedProductPricesToCsvFile(InputStream productsIs, InputStream pricesIs, OutputStream resultOs) {
-        try {
-            validateParams(productsIs, pricesIs, resultOs);
+        validateParams(productsIs, pricesIs, resultOs);
 
-            ProductReader productReader = new ProductReader(productsIs);
-            PriceReader priceReader = new PriceReader(pricesIs);
-            ProductPriceContainerWriter priceContainerWriter = new ProductPriceContainerWriter(resultOs);
-
+        try (ProductReader productReader = new ProductReader(productsIs);
+             PriceReader priceReader = new PriceReader(pricesIs);
+             ProductPriceContainerWriter priceContainerWriter = new ProductPriceContainerWriter(resultOs)) {
             Product product = null;
             Price price = null;
             List<Price> skippedPrices = new ArrayList<>();
@@ -46,7 +44,7 @@ public class ProductPriceMergeService {
                     if (price == null) {  //end of file
                         priceContainerWriter.writeObject(priceGroup);
                         break;
-                    } else if(priceGroup.getId().equals(price.getProductId())) {
+                    } else if (priceGroup.getId().equals(price.getProductId())) {
                         priceGroup.addPrice(price.getPrice());
                     } else {
                         skippedPrices.add(price);
@@ -57,26 +55,8 @@ public class ProductPriceMergeService {
                     }
                 }
             }
-
-            productReader.close();
-            priceReader.close();
-            priceContainerWriter.close();
         } catch (IOException e) {
             logger.error("Error during file writing", e);
-        } finally {
-            try {
-                if (productsIs != null) {
-                    productsIs.close();
-                }
-                if (pricesIs != null) {
-                    pricesIs.close();
-                }
-                if (resultOs != null) {
-                    resultOs.close();
-                }
-            } catch (IOException e1) {
-                logger.error("Error during stream closing", e1);
-            }
         }
     }
 

@@ -31,32 +31,25 @@ public class FileSortingService {
             throw new IllegalArgumentException("outputStream is null");
         }
 
-        try {
-            ChunkFileGenerator fileGenerator = new ChunkFileGenerator(inputFileStream);
+        try (ChunkFileGenerator fileGenerator = new ChunkFileGenerator(inputFileStream)) {
             fileGenerator.generateChunkFiles();
-            fileGenerator.close();
 
             String headerRow = fileGenerator.getHeaderRow();
             int chunkFilesCnt = fileGenerator.getChunkFilesCnt();
 
             if (chunkFilesCnt > 0) {
-                ChunkFilesSortMerger chunkFilesSortMerger = new ChunkFilesSortMerger(outputStream, chunkFilesCnt, headerRow);
-                chunkFilesSortMerger.mergeChunkFiles();
-                chunkFilesSortMerger.close();
+                try (ChunkFilesSortMerger chunkFilesSortMerger = new ChunkFilesSortMerger(outputStream, chunkFilesCnt, headerRow)) {
+                    chunkFilesSortMerger.mergeChunkFiles();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (IOException e) {
             logger.error("Error during file sorting", e);
-        } finally {
-            try {
-                inputFileStream.close();
-                outputStream.close();
-            } catch (IOException e1) {
-                logger.error("Error during stream closing", e1);
-            }
         }
     }
 
-    private static class ChunkFileGenerator {
+    private static class ChunkFileGenerator implements AutoCloseable {
         private String headerRow;
         private int chunkFilesCnt = 0;
 
@@ -110,19 +103,18 @@ public class FileSortingService {
         }
 
         private void saveBufferToChunkFile(List<String[]> arraysList, String filename) throws IOException {
-            FileOutputStream fos = new FileOutputStream(new File(filename));
-
-            StringArrayWriter writer = new StringArrayWriter(fos);
-            for (String[] strings : arraysList) {
-                writer.writeObject(strings);
+            try (FileOutputStream fos = new FileOutputStream(new File(filename));
+                 StringArrayWriter writer = new StringArrayWriter(fos)) {
+                for (String[] strings : arraysList) {
+                    writer.writeObject(strings);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            writer.close();
-            fos.close();
         }
     }
 
-    private static class ChunkFilesSortMerger {
+    private static class ChunkFilesSortMerger implements AutoCloseable {
         private final ArrayList<FileReader> readers = new ArrayList<>();
         private final ArrayList<BufferedReader> buffReaders = new ArrayList<>();
 

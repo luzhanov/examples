@@ -57,7 +57,7 @@ public class StringArrayWriterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failsOnNullStreamInput() throws Exception  {
-        StringArrayWriter writer = new StringArrayWriter(null);
+        new StringArrayWriter(null);
     }
 
 

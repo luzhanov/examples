@@ -57,7 +57,7 @@ public class ProductPriceContainerWriterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failsOnNullStreamInput() throws Exception  {
-        ProductPriceContainerWriter writer = new ProductPriceContainerWriter(null);
+        new ProductPriceContainerWriter(null);
     }
 
 }

@@ -16,7 +16,7 @@ public class PriceReaderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failsOnNullInput() {
-        PriceReader priceReader = new PriceReader(null);
+        new PriceReader(null);
     }
 
     @Test
@@ -30,10 +30,7 @@ public class PriceReaderTest {
 
     @Test
     public void skipsHeaderRow() throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append("PRODUCT_ID,DATE,PRICE").append("\n");
-        sb.append("2,2015-01-01,5.25").append("\n");
-        InputStream is = inputStreamFromString(sb.toString());
+        InputStream is = inputStreamFromString("PRODUCT_ID,DATE,PRICE" + "\n" + "2,2015-01-01,5.25" + "\n");
         PriceReader priceReader = new PriceReader(is);
 
         List<Price> priceList = new ArrayList<>();

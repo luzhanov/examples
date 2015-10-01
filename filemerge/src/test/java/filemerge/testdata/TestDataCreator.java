@@ -20,12 +20,11 @@ public class TestDataCreator {
         Collections.shuffle(productList);
         Collections.shuffle(priceList);
 
-        try {
-            FileOutputStream productsOs = Utils.createFileOutputStream("products1.csv");
-            FileOutputStream pricesOs = Utils.createFileOutputStream("prices1.csv");
+        try (FileOutputStream productsOs = Utils.createFileOutputStream("products1.csv");
+             FileOutputStream pricesOs = Utils.createFileOutputStream("prices1.csv");
 
-            ProductWriter productWriter = new ProductWriter(productsOs);
-            ProductPriceWriter priceWriter = new ProductPriceWriter(pricesOs);
+             ProductWriter productWriter = new ProductWriter(productsOs);
+             ProductPriceWriter priceWriter = new ProductPriceWriter(pricesOs)) {
 
             for (Product product : productList) {
                 productWriter.writeObject(product);
@@ -40,9 +39,5 @@ public class TestDataCreator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
 }

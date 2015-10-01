@@ -15,14 +15,10 @@ public class StringArrayWriter extends AbstractCsvWriter<String[]> {
 
     @Override
     protected String getLineForObject(String[] array) {
-        boolean firstValue = true;
-
         StringBuilder sb = new StringBuilder();
         for (String s : array) {
-            if (!firstValue) {
+            if (sb.length() != 0) {
                 sb.append(CSV_SEPARATOR);
-            } else {
-                firstValue = false;
             }
 
             sb.append(s);

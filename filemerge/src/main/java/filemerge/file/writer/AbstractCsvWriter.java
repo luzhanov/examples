@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-public abstract class AbstractCsvWriter<T> {
+public abstract class AbstractCsvWriter<T> implements AutoCloseable {
 
     public static final String CSV_SEPARATOR = ",";
 

@@ -13,7 +13,7 @@ public class PriceReader extends AbstractCsvBufferedReader<Price> {
 
     private static Logger logger = LoggerFactory.getLogger(PriceReader.class);
 
-    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public PriceReader(InputStream inputStream) {
         super(inputStream);
@@ -26,7 +26,7 @@ public class PriceReader extends AbstractCsvBufferedReader<Price> {
         productDescription.setProductId(Long.parseLong(strings[0]));
 
         try {
-            productDescription.setDate(df.parse(strings[1]));
+            productDescription.setDate(DATE_FORMAT.parse(strings[1]));
         } catch (ParseException e) {
             logger.error("Parse exception during date parse", e);
         }

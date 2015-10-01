@@ -17,7 +17,7 @@ public class ProductReaderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failsOnNullInput() {
-        ProductReader productReader = new ProductReader(null);
+        new ProductReader(null);
     }
 
     @Test
@@ -31,10 +31,7 @@ public class ProductReaderTest {
 
     @Test
     public void skipsHeaderRow() throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append("PRODUCT_ID,PRODUCT_DESCRIPTION").append("\n");
-        sb.append("3,PRODUCT 3").append("\n");
-        InputStream is = inputStreamFromString(sb.toString());
+        InputStream is = inputStreamFromString("PRODUCT_ID,PRODUCT_DESCRIPTION" + "\n" + "3,PRODUCT 3" + "\n");
         ProductReader productReader = new ProductReader(is);
 
         List<Product> productList = new ArrayList<>();

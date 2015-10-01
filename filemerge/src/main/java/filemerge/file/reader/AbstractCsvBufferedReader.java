@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public abstract class AbstractCsvBufferedReader<T> {
+public abstract class AbstractCsvBufferedReader<T> implements AutoCloseable {
 
     public static final String CSV_SEPARATOR = ",";
 
