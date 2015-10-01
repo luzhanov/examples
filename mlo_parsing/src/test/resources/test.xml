@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyLifeOrganized-xml ver="1.2">
     <TaskTree>
         <TaskNode Caption="проработать ресурс по природной фотографии http://www.naturescapes.net">
@@ -25,7 +25,7 @@
             <TheGoal>2</TheGoal>
             <Created>2013-05-31T18:22:39</Created>
         </TaskNode>
-        <TaskNode Caption="!! прочитать книгу по тайм-менеджменту Яна Франк - Дневник дизайнера-маньяка">
+        <TaskNode Caption="прочитать книгу">
             <Created>2011-01-19T22:43:39</Created>
         </TaskNode>
     </TaskTree>
