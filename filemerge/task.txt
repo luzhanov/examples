@@ -1,0 +1,12 @@
+TASK DESCRIPTION
+
+* Given two big (much bigger than system memory size) CSV files with product data:
+File 1 - contains fields "PRODUCT_ID", "PRODUCT_DESCRIPTION"
+File 2 - contains fields "PRODUCT_ID", "DATE", "PRICE"
+
+TASK
+Generate a third (result) file with all prices. It should be CSV file with next fields:
+"PRODUCT_ID", "PRODUCT_DESCRIPTION", "PRICE" (all prices, but comma-separated)
+
+Files should be combined using idea of limited memory.
+We should read file line by line.
