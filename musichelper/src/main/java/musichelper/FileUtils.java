@@ -1,6 +1,7 @@
 package musichelper;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -11,28 +12,18 @@ public class FileUtils {
 
     public static void listSubFolders(String pathToDir) {
         File file = new File(pathToDir);
-        String[] directories = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return new File(dir, name).isDirectory();
-            }
-        });
+        String[] directories = file.list((dir, name) -> new File(dir, name).isDirectory());
         LoggingUtils.logArray(directories);
     }
 
     public static Collection<String> getSubFolders(String pathToDir) {
         File file = new File(pathToDir);
-        String[] directories = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return new File(dir, name).isDirectory();
-            }
-        });
+        String[] directories = file.list((dir, name) -> new File(dir, name).isDirectory());
 
         return Arrays.asList(directories);
     }
 
-    public boolean fileExists(String path) {
+    public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
     }
@@ -42,13 +33,17 @@ public class FileUtils {
     }
 
     private static void copyFolder(File src, File dest, int level) throws IOException {
+        if (dest == null) {
+            throw new IllegalArgumentException("Dest is null");
+        }
+
         if (src.isDirectory()) {
             //if directory not exists, create it
             if (!dest.exists()) {
                 dest.mkdir();
                 System.out.println("Directory copied from "
                         + src + "  to " + dest);
-            } else if (level > 0 && dest.listFiles().length > 0) {
+            } else if (level > 0 && dest.listFiles() != null && dest.listFiles().length > 0) {
                 //if file already exists - create new folder with underscore
                 dest = new File(dest.getPath() + "_");
                 copyFolder(src, dest, ++level);
@@ -77,13 +72,17 @@ public class FileUtils {
     }
 
     private static void moveFolder(File src, File dest, int level) throws IOException {
+        if (dest == null) {
+            throw new IllegalArgumentException("Dest is null");
+        }
+
         if (src.isDirectory()) {
             //if directory not exists, create it
             if (!dest.exists()) {
                 dest.mkdir();
                 System.out.println("Directory copied from "
                         + src + "  to " + dest);
-            } else if (level > 0 && dest.listFiles().length > 0) {
+            } else if (level > 0  && dest.listFiles() != null && dest.listFiles().length > 0) {
                 //if file already exists - create new folder with underscore
                 dest = new File(dest.getPath() + "_");
                 moveFolder(src, dest, ++level);
