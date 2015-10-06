@@ -2,25 +2,30 @@ package com.luzhanov.gamebook.model;
 
 public class Book {
 
-    private Long id;
+    private Long bookId;
     private String name;
     private String author;
 
     public Book() {
     }
 
-    public Book(Long id, String name, String author) {
-        this.id = id;
+    public Book(String name, String author) {
         this.name = name;
         this.author = author;
     }
 
-    public Long getId() {
-        return id;
+    public Book(Long bookId, String name, String author) {
+        this.bookId = bookId;
+        this.name = name;
+        this.author = author;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public String getName() {

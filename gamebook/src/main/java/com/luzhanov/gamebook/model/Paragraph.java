@@ -2,27 +2,32 @@ package com.luzhanov.gamebook.model;
 
 public class Paragraph {
 
-    private Long id;
+    private Long paragraphId;
     private Long bookId;
-    private Long number;
-    private String text;
+    private Long number = 0L;
+    private String text = "";
 
     public Paragraph() {
     }
 
-    public Paragraph(Long id, Long bookId, Long number, String text) {
-        this.id = id;
+    public Paragraph(Long number, String text) {
+        this.number = number;
+        this.text = text;
+    }
+
+    public Paragraph(Long paragraphId, Long bookId, Long number, String text) {
+        this.paragraphId = paragraphId;
         this.bookId = bookId;
         this.number = number;
         this.text = text;
     }
 
-    public Long getId() {
-        return id;
+    public Long getParagraphId() {
+        return paragraphId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setParagraphId(Long paragraphId) {
+        this.paragraphId = paragraphId;
     }
 
     public Long getBookId() {

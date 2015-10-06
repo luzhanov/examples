@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luzhanov.gamebook.dao.BookMapper">
+
+    <select id="selectAllBooks" resultType="Book">
+        select * from book
+    </select>
+
+    <select id="selectBookById" resultType="Book">
+        select * from book
+        where bookid = #{bookId}
+    </select>
+
+    <insert id="insertBook" parameterType="Book" useGeneratedKeys="true" keyProperty="bookId" keyColumn="BOOKID">
+        INSERT INTO book
+        (name, author)
+        VALUES (#{name}, #{author})
+    </insert>
+
+</mapper>
