@@ -20,7 +20,9 @@ public class GoogleDriveConnectionService {
 
             FileList files = request.execute();
             for(File file : files.getItems()) {
-                allNames.add(file.getTitle());
+                String title = file.getTitle();
+                allNames.add(title);
+                System.out.println("GDrive file: " + title);
             }
 
             return allNames;

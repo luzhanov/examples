@@ -1,25 +1,26 @@
 package com.luzhanov.gamebook.service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 public class DriveConnector {
 
-    private final static String CLIENT_ID = "PASTE_YOUR_CLIENT_ID_HERE";
-    private final static String CLIENT_SECRET = "PASTE_YOUR_CLIENT_SECRET_HERE";
+    public static final String APPLICATION_NAME = "GDrive-Luzhanov-Test";
 
-    private final static String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
+    private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    private static final List<String> SCOPES = Arrays.asList(
+            "email",
+            "profile",
+            "https://www.googleapis.com/auth/drive",
+            "https://www.googleapis.com/auth/drive.file");
 
     private static DriveConnector instance;
     private Drive googleDriveClient;
@@ -27,7 +28,7 @@ public class DriveConnector {
     private DriveConnector() {
         try {
             initGoogleDriveServices();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Failed to create the Google drive client. Please check your Internet connection and your Google credentials.");
             e.printStackTrace();
         }
@@ -40,29 +41,25 @@ public class DriveConnector {
         return instance;
     }
 
-    public void initGoogleDriveServices() throws IOException {
-        HttpTransport httpTransport = new NetHttpTransport();
-        com.google.api.client.json.JsonFactory jsonFactory = new JacksonFactory();
+    private GoogleCredential getCredential() throws Exception {
+        File file = new File( this.getClass().getResource("/service-account.p12").toURI() );
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, jsonFactory, CLIENT_ID, CLIENT_SECRET, Arrays.asList(DriveScopes.DRIVE))
-                .setAccessType("online")
-                .setApprovalPrompt("auto").build();
+        return new GoogleCredential.Builder()
+                .setTransport(HTTP_TRANSPORT)
+                .setJsonFactory(JSON_FACTORY)
+                .setServiceAccountId("service@directed-potion-118213.iam.gserviceaccount.com")
+                .setServiceAccountPrivateKeyFromP12File(file)     //notasecret
+                .setServiceAccountScopes(SCOPES)
+            //    .setServiceAccountUser("luzhanov@gmail.com")
+                .build();
+    }
 
-        String url = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
-
-        //todo: use logger
-        System.out.println("Please open the following URL in your browser then type the authorization code:");
-        System.out.println("  " + url);
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String code = br.readLine();
-
-        GoogleTokenResponse response = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
-        GoogleCredential credential = new GoogleCredential().setFromTokenResponse(response);
-
+    public void initGoogleDriveServices() throws Exception {
+        GoogleCredential credential = getCredential();
         //Create a new authorized API client
-        googleDriveClient = new Drive.Builder(httpTransport, jsonFactory, credential).build();
+        googleDriveClient = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
     }
 
     public Drive getGoogleDriveClient() {
