@@ -13,3 +13,7 @@ test.db
 # IDEA files
 .idea/
 *.iml
+
+.gradle
+gradle/
+build/
