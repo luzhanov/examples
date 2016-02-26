@@ -4,10 +4,16 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import views.html.bookslist;
+import views.html.index;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class GamebookController extends Controller {
 
     public Result index() {
-        return TODO;
+        return ok(index.render("Gamebook application"));
     }
 
     public Result createGamebook() {
@@ -28,7 +34,9 @@ public class GamebookController extends Controller {
 
     public Result listAllBooks() {
         String username = session("username");
-        return TODO;
+
+        List<String> bookNames = Arrays.asList("Book1", "Book2", "Book3");
+        return ok(bookslist.render(bookNames));
     }
 
     public Result getBook() {

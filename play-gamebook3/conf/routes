@@ -4,6 +4,7 @@
 
 # Home page
 GET           /                    controllers.GamebookController.index()
+GET           /list                controllers.GamebookController.listAllBooks()
 POST          /gamebook            controllers.GamebookController.createGamebook()
 GET           /gamebook/:id        controllers.GamebookController.getGamebook(id: Long)
 PUT           /gamebook/:id        controllers.GamebookController.updateGamebook(id: Long)
