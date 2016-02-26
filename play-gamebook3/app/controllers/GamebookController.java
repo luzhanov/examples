@@ -6,32 +6,32 @@ import play.mvc.Result;
 
 public class GamebookController extends Controller {
 
-    public static Result index() {
+    public Result index() {
         return TODO;
     }
 
-    public static Result createGamebook() {
+    public Result createGamebook() {
         return TODO;
     }
 
-    public static Result getGamebook(Long id) {
+    public Result getGamebook(Long id) {
         return TODO;
     }
 
-    public static Result updateGamebook(Long id) {
+    public Result updateGamebook(Long id) {
         return TODO;
     }
 
-    public static Result deleteGamebook(Long id) {
+    public Result deleteGamebook(Long id) {
         return TODO;
     }
 
-    public static Result listAllBooks() {
+    public Result listAllBooks() {
         String username = session("username");
         return TODO;
     }
 
-    public static Result getBook() {
+    public Result getBook() {
         return TODO;
     }
 
