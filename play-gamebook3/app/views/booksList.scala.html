@@ -1,0 +1,8 @@
+@(books: java.util.List[String])
+
+@main("Gamebook list") {
+    @for(book <- books){
+        @bookname(book)
+    }
+}
+
