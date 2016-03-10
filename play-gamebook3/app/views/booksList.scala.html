@@ -1,6 +1,14 @@
-@(books: java.util.List[String])
+@(books: java.util.List[Gamebook], form: Form[Gamebook])
 
 @main("Gamebook list") {
+
+    <h2>New Gamebook</h2>
+    @helper.form(action = routes.GamebookController.createGamebook()) {
+        @helper.inputText(form("name"))
+
+        <input type="submit" value="New Gamebook"/>
+    }
+
     @for(book <- books){
         @bookname(book)
     }

@@ -1,6 +1,8 @@
 package controllers;
 
 
+import models.Gamebook;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -12,12 +14,26 @@ import java.util.List;
 
 public class GamebookController extends Controller {
 
+    static Form<Gamebook> gamebookForm = new Form<>(Gamebook.class);
+
     public Result index() {
         return ok(index.render("Gamebook application"));
     }
 
+    public Result listAllBooks() {
+        List<Gamebook> gamebooks = Gamebook.find.all();
+        return ok(bookslist.render(gamebooks, gamebookForm));
+    }
+
     public Result createGamebook() {
-        return TODO;
+        Form<Gamebook> form = gamebookForm.bindFromRequest(request());
+
+        if (!form.hasErrors()) {
+            form.get().save();
+            return redirect(routes.GamebookController.listAllBooks());
+        } else {
+            return badRequest(bookslist.render(Gamebook.find.all(), form));
+        }
     }
 
     public Result getGamebook(Long id) {
@@ -30,13 +46,6 @@ public class GamebookController extends Controller {
 
     public Result deleteGamebook(Long id) {
         return TODO;
-    }
-
-    public Result listAllBooks() {
-        String username = session("username");
-
-        List<String> bookNames = Arrays.asList("Book1", "Book2", "Book3");
-        return ok(bookslist.render(bookNames));
     }
 
     public Result getBook() {

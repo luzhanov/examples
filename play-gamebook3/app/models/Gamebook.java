@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.validation.Constraints.Required;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,7 +11,11 @@ public class Gamebook extends Model {
 
     @Id
     private Long id;
+
+    @Required
     private String name;
+
+    public static Find<Long, Gamebook> find = new Find<Long, Gamebook>(){};
 
     public Long getId() {
         return id;
