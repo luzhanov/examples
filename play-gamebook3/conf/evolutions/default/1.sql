@@ -1,4 +1,3 @@
--- noinspection SqlNoDataSourceInspectionForFile
 # --- Created by Ebean DDL
 # To stop Ebean DDL generation, remove this comment and start using Evolutions
 
@@ -7,6 +6,7 @@
 create table gamebook (
   id                        bigint not null,
   name                      varchar(255),
+  last_update               timestamp not null,
   constraint pk_gamebook primary key (id))
 ;
 

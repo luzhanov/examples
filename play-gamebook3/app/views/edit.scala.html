@@ -1,0 +1,12 @@
+@(id: Long, form: Form[Gamebook])
+
+@main("Edit") {
+
+    <h2>Edit Gamebook</h2>
+    @helper.form(action = routes.GamebookController.updateGamebook(id)) {
+        @helper.inputText(form("name"))
+
+        <input type="submit" value="Update Gamebook"/>
+    }
+
+}

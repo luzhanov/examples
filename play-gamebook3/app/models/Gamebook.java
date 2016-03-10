@@ -3,8 +3,10 @@ package models;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints.Required;
 
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class Gamebook extends Model {
@@ -14,6 +16,9 @@ public class Gamebook extends Model {
 
     @Required
     private String name;
+
+    @Version
+    public Timestamp lastUpdate;
 
     public static Find<Long, Gamebook> find = new Find<Long, Gamebook>(){};
 

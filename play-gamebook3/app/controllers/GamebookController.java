@@ -1,15 +1,15 @@
 package controllers;
 
-
 import models.Gamebook;
+
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import views.html.bookslist;
+import views.html.edit;
 import views.html.index;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class GamebookController extends Controller {
@@ -36,12 +36,26 @@ public class GamebookController extends Controller {
         }
     }
 
-    public Result getGamebook(Long id) {
-        return TODO;
+    public Result editGamebook(Long id) {
+        Gamebook gamebook = Gamebook.find.byId(id);
+
+        if (gamebook == null) {
+            return redirect(routes.GamebookController.listAllBooks());
+        } else {
+            Form<Gamebook> form = gamebookForm.fill(gamebook);
+            return ok(edit.render(id, form));
+        }
     }
 
     public Result updateGamebook(Long id) {
-        return TODO;
+        Form<Gamebook> form = gamebookForm.fill(Gamebook.find.byId(id)).bindFromRequest(request());
+
+        if (!form.hasErrors()) {
+            form.get().update();
+            return redirect(routes.GamebookController.listAllBooks());
+        } else {
+            return badRequest(edit.render(id, form));
+        }
     }
 
     public Result deleteGamebook(Long id) {

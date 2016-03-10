@@ -4,12 +4,12 @@
 
 # Home page
 #GET           /                    controllers.GamebookController.index()
-GET           /                controllers.GamebookController.listAllBooks()
-POST          /gamebook            controllers.GamebookController.createGamebook()
-GET           /gamebook/:id        controllers.GamebookController.getGamebook(id: Long)
-PUT           /gamebook/:id        controllers.GamebookController.updateGamebook(id: Long)
-DELETE        /gamebook/:id        controllers.GamebookController.deleteGamebook(id: Long)
+GET         /                           controllers.GamebookController.listAllBooks()
+POST        /gamebook                   controllers.GamebookController.createGamebook()
+GET         /gamebook/:id               controllers.GamebookController.editGamebook(id: Long)
+POST        /gamebook/:id               controllers.GamebookController.updateGamebook(id: Long)
+POST        /gamebook/:id/delete        controllers.GamebookController.deleteGamebook(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
