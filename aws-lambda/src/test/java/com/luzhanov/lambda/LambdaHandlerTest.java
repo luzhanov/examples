@@ -7,9 +7,9 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class PointsLambdaHandlerTest {
+public class LambdaHandlerTest {
 
-    private PointsLambdaHandler handler = new PointsLambdaHandler();
+    private LambdaHandler handler = new LambdaHandler();
 
     @Ignore
     @Test
@@ -20,6 +20,10 @@ public class PointsLambdaHandlerTest {
 
         assertThat(handler.handleRequest("aaa", mockContext)).isEqualTo("AAA");
     }
+
+    //todo: test the blank input
+
+    //todo: test the word count functionality
 
 }    
 
