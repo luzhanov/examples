@@ -1,29 +1,38 @@
 package com.luzhanov.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import org.junit.Ignore;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class LambdaHandlerTest {
 
     private LambdaHandler handler = new LambdaHandler();
 
-    @Ignore
     @Test
-    public void testHandleRequestChangeToUppercase() throws Exception {
-        Context mockContext = mock(Context.class);
+    public void testHandleEmptyResult() throws Exception {
+        Context mockContext = mockContext();
 
-        //todo: set up the mock behavior
-
-        assertThat(handler.handleRequest("aaa", mockContext)).isEqualTo("AAA");
+        assertThat(handler.handleRequest("", mockContext)).isEqualTo("Error: input is empty");
+        assertThat(handler.handleRequest(null, mockContext)).isEqualTo("Error: input is empty");
     }
 
-    //todo: test the blank input
+    @Test
+    public void testHandleResult() throws Exception {
+        Context mockContext = mockContext();
 
-    //todo: test the word count functionality
+        assertThat(handler.handleRequest("Test word test second word third", mockContext))
+                .isEqualTo("{second=1, test=2, third=1, word=2}");
+    }
+
+    private Context mockContext() {
+        Context context = mock(Context.class);
+        when(context.getLogger()).thenReturn(mock(LambdaLogger.class));
+        return context;
+    }
 
 }    
 

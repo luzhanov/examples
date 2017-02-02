@@ -4,7 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -22,14 +22,9 @@ public class LambdaHandler implements RequestHandler<String, String> {
         }
 
         String[] words = input.split(" ");
-        HashMap<String, Integer> wordsCount = new HashMap<>();
-        for (String s : words){
-            //todo: replace with Map.merge()
-            if (wordsCount.containsKey(s)) {
-                wordsCount.replace(s, wordsCount.get(s) + 1);
-            } else {
-                wordsCount.put(s, 1);
-            }
+        TreeMap<String, Integer> wordsCount = new TreeMap<>();
+        for (String currentWord : words){
+            wordsCount.merge(currentWord.toLowerCase(), 1, Integer::sum);
         }
 
         return wordsCount.toString();
