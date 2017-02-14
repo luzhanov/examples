@@ -16,7 +16,7 @@ public class LambdaHandlerTest {
     public void testHandleEmptyResult() throws Exception {
         Context mockContext = mockContext();
 
-        assertThat(handler.handleRequest("", mockContext)).isEqualTo("Error: input is empty");
+        assertThat(handler.handleRequest(new Message(""), mockContext)).isEqualTo("Error: input is empty");
         assertThat(handler.handleRequest(null, mockContext)).isEqualTo("Error: input is empty");
     }
 
@@ -24,7 +24,7 @@ public class LambdaHandlerTest {
     public void testHandleResult() throws Exception {
         Context mockContext = mockContext();
 
-        assertThat(handler.handleRequest("Test word test second word third", mockContext))
+        assertThat(handler.handleRequest(new Message("Test word test second word third"), mockContext))
                 .isEqualTo("{second=1, test=2, third=1, word=2}");
     }
 
