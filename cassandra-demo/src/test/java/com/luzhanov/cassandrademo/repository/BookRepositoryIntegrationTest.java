@@ -22,15 +22,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.luzhanov.cassandrademo.repository.DataInitializer.KEYSPACE_CREATION_QUERY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = CassandraConfig.class)
 @Slf4j
 public class BookRepositoryIntegrationTest {
-
-    private static final String KEYSPACE_CREATION_QUERY = "CREATE KEYSPACE IF NOT EXISTS testKeySpace "
-            + "WITH replication = { 'class': 'SimpleStrategy', 'replication_factor': '3' };";
 
     private static final String KEYSPACE_ACTIVATE_QUERY = "USE testKeySpace;";
 
