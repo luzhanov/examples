@@ -1,4 +1,4 @@
-package com.luzhanov.gamebook;
+package com.luzhanov.simpleapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
